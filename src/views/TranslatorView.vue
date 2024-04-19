@@ -1,5 +1,9 @@
 <script setup>
  import { ref } from 'vue';
+ import { useHistoryStore } from '@/stores/history'
+
+
+ const store = useHistoryStore();
 
  const userInput = ref('');
 
@@ -15,6 +19,15 @@
       console.log(data);
 
       result.value = data.responseData.translatedText;
+
+      // save to history
+
+      const item = {
+        input: userInput.value,
+        output: result.value
+      }
+
+      store.add(item);
     }
  };
 
